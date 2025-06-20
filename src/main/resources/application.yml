@@ -1,0 +1,84 @@
+
+auth:
+  jwt:
+    token-secret: uma_calca_para_uma_menina_de_15_anos_custa_mais_de_300_reais
+    expiration: 86400000
+
+api:
+  prefix:
+    v1: /api/v1
+
+spring:
+  application:
+    name: business
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: wilsonperepelecia@gmail.com
+    password: qwxp nlqw ejbb cwxo
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    #    url: jdbc:postgresql://db.iymvenofedcwflyikzrc.supabase.co:5432/postgres
+    #    username: postgres
+    #    password: Livia_maia06
+    url: jdbc:postgresql://localhost:5435/business
+    #    username: user
+    #    password: password
+    username: wilson.caleb
+    password: L1v1a_m41406
+    mvc:
+      pathmatch:
+        matching-strategy: ant_path_matcher
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: true
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+        envers:
+          audit_table_suffix: _AUD
+          audit_strategy: org.hibernate.envers.strategy.DefaultAuditStrategy
+          store_data_at_delete: true
+          auto_audit: true
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 6060
+  servlet:
+    context-path: /
+  http2:
+    enabled: true
+  compression:
+    enabled: true
+    min-response-size: 1
+    mime-types: text/html,
+      text/xml,
+      text/plain,
+      text/css,
+      text/javascript,
+      application/javascript,
+      application/json,
+      application/xml,
+      application/pdf,
+      image/png,
+      image/jpeg,
+      image/svg+xml
+
+logging:
+  level:
+    root: 'INFO'
+    org.hibernate.type.descriptor.sql.BasicBinder: 'TRACE'
+    org.springframework.boot.context.properties.migrator: 'DEBUG'
+    org.hibernate.type.descriptor.sql.BasicExtractor: 'OFF'
+    org.springframework.web.servlet.DispatcherServlet: 'DEBUG'
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: 'DEBUG'
