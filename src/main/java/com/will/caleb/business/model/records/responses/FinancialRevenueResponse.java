@@ -1,4 +1,19 @@
 package com.will.caleb.business.model.records.responses;
 
-public record FinancialRevenueResponse() {
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+public record FinancialRevenueResponse( Integer id,
+                                        @JsonFormat(pattern = "yyyy-MM-dd")
+                                        LocalDateTime data,
+                                        BigDecimal valor,
+                                        String categoria,
+                                        String descricao,
+                                        String clienteRelacionado,
+                                        @JsonFormat(pattern = "yyyy-MM-dd")
+                                        LocalDateTime createdAt,
+                                        @JsonFormat(pattern = "yyyy-MM-dd")
+                                        LocalDateTime updatedAt) implements AbstractResponseDTO {
 }

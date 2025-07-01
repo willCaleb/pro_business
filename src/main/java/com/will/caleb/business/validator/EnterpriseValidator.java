@@ -17,12 +17,14 @@ public class EnterpriseValidator extends AbstractValidator{
     private final EnterpriseRepository enterpriseRepository;
 
     public void validateInsert(Enterprise enterprise) {
-        validateMandatoryFields(enterprise);
-        validateDuplicatedCnpj(enterprise);
-        validateDuplicatedEmail(enterprise);
+        validateMandatoryFields(enterprise, true);
     }
 
-    private void validateDuplicatedEmail(Enterprise enterprise) {
+    public void validateUpdate(Enterprise enterprise) {
+        validateMandatoryFields(enterprise, false);
+    }
+
+    public void validateDuplicatedEmail(Enterprise enterprise) {
         List<Enterprise> allByEmail = enterpriseRepository.findAllByEmail(enterprise.getEmail());
 
         if (ListUtil.isNotEmpty(allByEmail)) {
@@ -30,19 +32,21 @@ public class EnterpriseValidator extends AbstractValidator{
         }
     }
 
-    private void validateDuplicatedCnpj(Enterprise enterprise) {
-        List<Enterprise> allByCnpj = enterpriseRepository.findAllByCnpj(enterprise.getCnpj());
+    public void validateDuplicatedCnpj(Enterprise enterprise) {
+        List<Enterprise> allByCnpj = enterpriseRepository.findAllByCnpj(enterprise.getDocument());
 
         if (ListUtil.isNotEmpty(allByCnpj)) {
             throw new CustomException(EnumCustomException.ENTERPRISE_DUPLICATED_CNPJ);
         }
     }
 
-    private void validateMandatoryFields(Enterprise enterprise) {
+    private void validateMandatoryFields(Enterprise enterprise, boolean fromInsert) {
         addFieldToValidate("Nome", enterprise.getName());
-        addFieldToValidate("E-mail", enterprise.getEmail());
-        addFieldToValidate("CNPJ", enterprise.getCnpj());
-        addFieldToValidate("Telefone", enterprise.getPhone());
+        if (!fromInsert) {
+            addFieldToValidate("E-mail", enterprise.getEmail());
+            addFieldToValidate("CNPJ", enterprise.getDocument());
+            addFieldToValidate("Telefone", enterprise.getPhone());
+        }
         validate();
     }
 }

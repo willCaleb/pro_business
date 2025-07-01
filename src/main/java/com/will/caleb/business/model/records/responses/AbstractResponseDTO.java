@@ -1,4 +1,8 @@
 package com.will.caleb.business.model.records.responses;
 
-public interface AbstractResponseDTO {
+import com.will.caleb.business.model.records.AbstractDTO;
+
+import java.io.Serializable;
+
+public interface AbstractResponseDTO extends Serializable, AbstractDTO {
 }

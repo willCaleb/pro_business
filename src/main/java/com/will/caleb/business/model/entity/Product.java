@@ -1,29 +1,80 @@
 package com.will.caleb.business.model.entity;
 
+import com.will.caleb.business.model.enums.EnumStatusProduto;
+import com.will.caleb.business.model.enums.EnumTipoProduto;
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 
-public class Product {
+@Entity
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "bus_product")
+public class Product extends AbstractEntity{
 
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "codigo")
     private String codigo;
-    private String nsu;
-    private String nome;
-    private String descricao;
-    private String categoria;
-    private Tipo tipo; // ENUM: PRODUTO, SERVICO
-    private BigDecimal precoCompra;
-    private BigDecimal precoVenda;
-    private BigDecimal margemLucro;
-    private Estoque estoque;
-    private Status status; // ENUM: ATIVO, INATIVO, DESCONTINUADO
-    private String fornecedor;
-    private String unidadeMedida;
-    private BigDecimal peso;
-    private Dimensoes dimensoes;
-    private String observacoes;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
-    // Getters e Setters (gerar via Lombok ou IDE)
+    @Column(name = "nsu")
+    private String nsu;
+
+    @Column(name = "nome")
+    private String nome;
+
+    @Column(name = "descricao")
+    private String descricao;
+
+    @Column(name = "categoria")
+    private String categoria;
+
+    @Column(name = "tipo")
+    private EnumTipoProduto tipo;
+
+    @Column(name = "preco_compra")
+    private BigDecimal precoCompra;
+
+    @Column(name = "preco_venda")
+    private BigDecimal precoVenda;
+
+    @Column(name = "margem_lucro")
+    private BigDecimal margemLucro;
+
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_produto_estoque", referencedColumnName = "id")
+    private ProdutoEstoque estoque;
+
+    @Column(name = "status")
+    private EnumStatusProduto status;
+
+    @Column(name = "fornecedor")
+    private String fornecedor;
+
+    @Column(name = "unidade_medida")
+    private String unidadeMedida;
+
+    @Column(name = "peso")
+    private BigDecimal peso;
+
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_produto_dimensoes", referencedColumnName = "id")
+    private ProdutoDimensoes dimensoes;
+
+    @Column(name = "observacoes")
+    private String observacoes;
+
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
 }

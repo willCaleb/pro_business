@@ -10,7 +10,7 @@ public interface ClientService {
 
     Client include(Client client);
 
-    void edit(Integer clientId, Client client);
+    Client edit( Client client);
 
     Page<Client> listAll(Pageable pageable);
 

@@ -1,13 +1,12 @@
 package com.will.caleb.business.service.impl;
 
 import com.will.caleb.business.context.TenantContext;
+import com.will.caleb.business.model.entity.Address;
 import com.will.caleb.business.model.entity.Enterprise;
 import com.will.caleb.business.model.entity.User;
-import com.will.caleb.business.model.records.converters.EnterpriseMapper;
 import com.will.caleb.business.model.records.requests.AuthRequest;
 import com.will.caleb.business.model.records.requests.RegisterRequest;
 import com.will.caleb.business.model.records.responses.AuthResponse;
-import com.will.caleb.business.repository.UserRepository;
 import com.will.caleb.business.service.EnterpriseService;
 import com.will.caleb.business.service.UserService;
 import com.will.caleb.business.utils.JwtUtil;
@@ -17,6 +16,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.will.caleb.business.model.converter.EnterpriseMapper;
+import com.will.caleb.business.model.converter.AddressMapper;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +29,8 @@ public class AuthService {
     private final AuthenticationManager authManager;
     private final EnterpriseService enterpriseService;
     private final EnterpriseMapper enterpriseMapper;
+    private final AddressMapper addressMapper;
+    private final WebhookService webhookService;
 
     @Transactional
     public AuthResponse register(RegisterRequest request) {
@@ -36,7 +39,15 @@ public class AuthService {
                 .password(passwordEncoder.encode(request.password()))
                 .build();
 
-        Enterprise enterprise = enterpriseService.include(enterpriseMapper.toEntity(request.enterprise()));
+        Address address = addressMapper.toAddress(request.enterprise().address());
+
+        Enterprise enterprise = enterpriseMapper.toEntity(request.enterprise());
+
+        enterprise.setAddress(address);
+
+        enterprise = enterpriseService.include(enterprise);
+
+        webhookService.enviarParaWebhook(enterprise);
 
         TenantContext.setEnterprise(enterprise);
 

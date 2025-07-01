@@ -77,8 +77,9 @@ server:
 logging:
   level:
     root: 'INFO'
+    org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: 'TRACE'
-    org.springframework.boot.context.properties.migrator: 'DEBUG'
     org.hibernate.type.descriptor.sql.BasicExtractor: 'OFF'
+    org.hibernate.collection.spi.AbstractPersistentCollection: 'ERROR'
     org.springframework.web.servlet.DispatcherServlet: 'DEBUG'
     org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: 'DEBUG'

@@ -22,7 +22,7 @@ public class Enterprise extends AbstractGenericEntity{
     private String name;
 
     @Column(name = "cnpj")
-    private String cnpj;
+    private String document;
 
     @Column(name = "email")
     private String email;
@@ -30,10 +30,13 @@ public class Enterprise extends AbstractGenericEntity{
     @Column(name = "phone")
     private String phone;
 
-    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
     @Column(name = "include_date")
     private Date includeDate;
+
+    @Column(name = "update_at")
+    private Date updateAt;
 }

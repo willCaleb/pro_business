@@ -23,12 +23,13 @@ public class ClientServiceImpl extends AbstractServiceImpl implements ClientServ
     public Client include(Client client) {
         clientValidator.validateInsert(client, getIdEnterpriseByContext());
         client.setInclusionDate(new Date());
+        client.setEnterprise(getIdEnterpriseByContext());
         return clientRepository.save(client);
     }
 
     @Override
-    public void edit(Integer clientId, Client client) {
-        Client clienteManaged = clientRepository.findById(clientId).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+    public Client edit(Client client) {
+        Client clienteManaged = clientRepository.findById(client.getId()).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 
         clienteManaged.setGender(client.getDocument());
         clienteManaged.setName(client.getName());
@@ -38,7 +39,7 @@ public class ClientServiceImpl extends AbstractServiceImpl implements ClientServ
         clienteManaged.setEmail(client.getEmail());
         clienteManaged.setPhone(client.getPhone());
 
-        clientRepository.save(clienteManaged);
+        return clientRepository.save(clienteManaged);
     }
 
     @Override

@@ -1,4 +1,8 @@
 package com.will.caleb.business.model.records.requests;
 
-public interface AbstractRequestDTO {
+import com.will.caleb.business.model.records.AbstractDTO;
+
+import java.io.Serializable;
+
+public interface AbstractRequestDTO extends Serializable, AbstractDTO {
 }

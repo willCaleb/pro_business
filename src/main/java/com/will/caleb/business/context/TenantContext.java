@@ -7,7 +7,6 @@ public class TenantContext {
     private static final ThreadLocal<Integer> currentEnterprise = new ThreadLocal<>();
 
     public static void setEnterprise(Enterprise enterprise) {
-        clearContext();
         currentEnterprise.set(enterprise.getId());
     }
 
@@ -17,6 +16,11 @@ public class TenantContext {
         }catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void setEnterprise(Integer enterriseId) {
+        clearContext();
+        currentEnterprise.set(enterriseId);
     }
 
     public static void clearContext() {

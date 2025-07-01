@@ -1,5 +1,8 @@
 package com.will.caleb.business.auth;
 
+import com.will.caleb.business.context.TenantContext;
+import com.will.caleb.business.exception.CustomException;
+import com.will.caleb.business.exception.EnumCustomException;
 import com.will.caleb.business.model.entity.User;
 import com.will.caleb.business.service.UserService;
 import com.will.caleb.business.utils.JwtUtil;
@@ -41,11 +44,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         token = authHeader.substring(7);
         username = jwtUtil.extractUsername(token);
 
+        if (jwtUtil.isTokenExpired(token)) {
+            throw new CustomException(EnumCustomException.LOGIN_TOKEN_EXPIRED);
+        }
+
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             User user = userService.findByUsername(username).orElse(null);
 
+            if (Utils.isNotEmpty(user.getEnterprise())) {
+                TenantContext.setEnterprise(user.getEnterprise());
+            }
+
             if(Utils.isEmpty(user)) {
-                throw new RuntimeException("Usuário não encontrado");
+                throw new CustomException(EnumCustomException.USER_NOT_FOUND);
             }
             if (jwtUtil.isTokenValid(token, user)) {
                 var authToken = new UsernamePasswordAuthenticationToken(

@@ -1,4 +1,4 @@
-package com.will.caleb.business.repository;
+package com.will.caleb.business.repository.custom;
 
 import com.will.caleb.business.model.classes.DashboardFinanceiroResponse;
 import com.will.caleb.business.pattern.enums.EnumMonth;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class FinancialAnalyticsCustomRepository {
+public class CustomFinancialAnalyticsRepository {
 
     private final NamedParameterJdbcTemplate jdbc;
 

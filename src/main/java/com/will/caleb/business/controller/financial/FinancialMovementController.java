@@ -1,5 +1,6 @@
-package com.will.caleb.business.controller;
+package com.will.caleb.business.controller.financial;
 
+import com.will.caleb.business.controller.AbstractController;
 import com.will.caleb.business.model.entity.FinancialMovement;
 import com.will.caleb.business.model.records.requests.FinancialMovementRequest;
 import com.will.caleb.business.model.records.responses.FinancialMovementResponse;
@@ -13,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(FinancialMovementController.PATH)
-public class FinancialMovementController extends AbstractController{
+public class FinancialMovementController extends AbstractFinancialController {
 
-    public static final String PATH = "${api.prefix.v1}/financial/future/revenues";
+    public static final String PATH = FINANCIAL_PATH + "/future/revenues";
 
     private final FinancialMovementService financialMovementService;
 

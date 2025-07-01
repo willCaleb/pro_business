@@ -4,7 +4,7 @@ import com.will.caleb.business.model.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface ProdutoService {
+public interface ProductService {
 
     Product incluir(Product product);
 

@@ -1,4 +1,8 @@
 package com.will.caleb.business.model.records.responses;
 
-public record ProdutoDimensoesResponse() {
+import java.math.BigDecimal;
+
+public record ProdutoDimensoesResponse(BigDecimal altura,
+                                       BigDecimal largura,
+                                       BigDecimal profundidade) implements AbstractResponseDTO {
 }

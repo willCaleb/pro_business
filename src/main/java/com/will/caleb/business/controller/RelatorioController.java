@@ -1,31 +1,31 @@
 package com.will.caleb.business.controller;
 
+import com.will.caleb.business.model.entity.FinancialExpense;
+import com.will.caleb.business.pdf.PdfReportGenerator;
+import com.will.caleb.business.service.FinancialExpenseService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/relatorios")
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/relatorios")
 public class RelatorioController {
 
     private final PdfReportGenerator pdfGenerator;
-    private final VendaService vendaService; // Exemplo de serviço
-
-    public RelatorioController(PdfReportGenerator pdfGenerator, VendaService vendaService) {
-        this.pdfGenerator = pdfGenerator;
-        this.vendaService = vendaService;
-    }
+    private final FinancialExpenseService expenseService; // Exemplo de serviço
 
     @GetMapping("/vendas")
-    public ResponseEntity<byte[]> gerarRelatorioVendas() {
-        List<Venda> vendas = vendaService.buscarTodas();
+    public ResponseEntity<byte[]> gerarRelatorioVendas(Pageable pageable) {
+        Page<FinancialExpense> list = expenseService.list(pageable);
 
         byte[] pdf = pdfGenerator.generateReport(
-                vendas,
-                Venda.class,
+                list.toList(),
+                FinancialExpense.class,
                 "Vendas de Produtos",
                 "Empresa XPTO",
                 "Junho 2025"
