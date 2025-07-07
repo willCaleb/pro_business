@@ -6,7 +6,8 @@ import org.mapstruct.Mapper;
 
 import java.math.BigDecimal;
 
-public record ProductRequest(String codigo,
+public record ProductRequest(Integer id,
+                             String codigo,
                              String nsu,
                              String nome,
                              String descricao,
@@ -14,6 +15,7 @@ public record ProductRequest(String codigo,
                              EnumTipoProduto tipo,
                              BigDecimal precoCompra,
                              BigDecimal precoVenda,
+                             BigDecimal margemLucro,
                              ProdutoEstoqueRequest estoque,
                              EnumStatusProduto status,
                              String fornecedor,

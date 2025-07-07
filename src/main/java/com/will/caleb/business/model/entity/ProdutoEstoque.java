@@ -1,6 +1,7 @@
 package com.will.caleb.business.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 

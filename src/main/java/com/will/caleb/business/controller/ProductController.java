@@ -2,6 +2,7 @@ package com.will.caleb.business.controller;
 
 import com.will.caleb.business.model.entity.Product;
 import com.will.caleb.business.model.records.requests.ProductRequest;
+import com.will.caleb.business.model.records.responses.artificial_intelligence.ProductAnaliseIAResponse;
 import com.will.caleb.business.model.records.responses.ProductResponse;
 import com.will.caleb.business.pattern.PageableBean;
 import com.will.caleb.business.service.ProductService;
@@ -50,5 +51,10 @@ public class ProductController extends AbstractController{
                 .withTotal(productPage.getTotalElements())
                 .getPaged();
 
+    }
+
+    @GetMapping("/ai-insights")
+    public ProductAnaliseIAResponse generateAiAnalytics(Pageable pageable) {
+        return productService.generateAiAnalytics(pageable);
     }
 }

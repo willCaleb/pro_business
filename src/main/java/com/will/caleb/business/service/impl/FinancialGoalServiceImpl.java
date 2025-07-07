@@ -21,7 +21,6 @@ public class FinancialGoalServiceImpl extends AbstractServiceImpl implements Fin
     @Override
     public FinancialGoal include(FinancialGoal financialGoal) {
 
-        financialGoal.setEnterprise(getIdEnterpriseByContext());
         financialGoal.setCreatedAt(new Date());
 
         return financialGoalRepository.save(financialGoal);

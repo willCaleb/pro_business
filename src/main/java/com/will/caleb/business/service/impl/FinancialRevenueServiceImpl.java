@@ -22,7 +22,6 @@ public class FinancialRevenueServiceImpl extends AbstractServiceImpl implements 
 
     @Override
     public FinancialRevenue include(FinancialRevenue financialRevenue) {
-        financialRevenue.setEnterprise(getIdEnterpriseByContext());
         financialRevenue.setCreatedAt(new Date());
         return financialRevenueRepository.save(financialRevenue);
     }

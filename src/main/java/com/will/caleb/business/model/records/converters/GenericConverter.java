@@ -4,6 +4,7 @@ import com.will.caleb.business.model.entity.AbstractEntity;
 import com.will.caleb.business.model.entity.AbstractGenericEntity;
 import com.will.caleb.business.model.records.AbstractDTO;
 import com.will.caleb.business.utils.ClassUtil;
+import com.will.caleb.business.utils.Utils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -81,15 +82,17 @@ public abstract class GenericConverter {
                 RecordComponent component = components[i];
                 String name = component.getName();
 
-                Field field = getField(entity.getClass(), name);
-                if (field != null) {
-                    field.setAccessible(true);
-                    Object value = field.get(entity);
+                if (Utils.isNotEmpty(entity)) {
+                    Field field = getField(entity.getClass(), name);
+                    if (field != null) {
+                        field.setAccessible(true);
+                        Object value = field.get(entity);
 
-                    if (value instanceof AbstractEntity subEntity && AbstractDTO.class.isAssignableFrom(component.getType())) {
-                        args[i] = toResponse(subEntity, (Class<? extends AbstractDTO>) component.getType());
-                    } else {
-                        args[i] = convertValue(field.get(entity), component.getType());
+                        if (value instanceof AbstractEntity subEntity && AbstractDTO.class.isAssignableFrom(component.getType())) {
+                            args[i] = toResponse(subEntity, (Class<? extends AbstractDTO>) component.getType());
+                        } else {
+                            args[i] = convertValue(field.get(entity), component.getType());
+                        }
                     }
                 }
             }

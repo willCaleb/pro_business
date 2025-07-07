@@ -23,7 +23,6 @@ public class FinancialExpenseServiceImpl extends AbstractServiceImpl implements 
     @Override
     public FinancialExpense include(FinancialExpense expense) {
 
-        expense.setEnterprise(getIdEnterpriseByContext());
         expense.setCreatedAt(new Date());
         return financialExpenseRepository.save(expense);
     }

@@ -1,5 +1,6 @@
 package com.will.caleb.business.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.will.caleb.business.model.enums.EnumStatusProduto;
 import com.will.caleb.business.model.enums.EnumTipoProduto;
 import jakarta.persistence.*;
@@ -48,7 +49,7 @@ public class Product extends AbstractEntity{
     @Column(name = "margem_lucro")
     private BigDecimal margemLucro;
 
-    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_produto_estoque", referencedColumnName = "id")
     private ProdutoEstoque estoque;
 
@@ -64,7 +65,7 @@ public class Product extends AbstractEntity{
     @Column(name = "peso")
     private BigDecimal peso;
 
-    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_produto_dimensoes", referencedColumnName = "id")
     private ProdutoDimensoes dimensoes;
 

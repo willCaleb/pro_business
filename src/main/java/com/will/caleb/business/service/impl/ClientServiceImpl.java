@@ -23,7 +23,6 @@ public class ClientServiceImpl extends AbstractServiceImpl implements ClientServ
     public Client include(Client client) {
         clientValidator.validateInsert(client, getIdEnterpriseByContext());
         client.setInclusionDate(new Date());
-        client.setEnterprise(getIdEnterpriseByContext());
         return clientRepository.save(client);
     }
 
